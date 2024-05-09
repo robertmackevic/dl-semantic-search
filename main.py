@@ -27,8 +27,8 @@ def run(emb: str, gpt: str, num_candidates: int, num_results: int) -> None:
             try:
                 print(search_engine.semantic_search(query, use_gpt=use_gpt))
 
-            except ValueError as exception:
-                print(exception)
+            except ValueError:
+                pass
 
     except KeyboardInterrupt:
         print("Program terminated.")
