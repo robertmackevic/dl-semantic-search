@@ -1,5 +1,5 @@
 from os import environ
-from typing import List, Mapping, Any
+from typing import List, Mapping, Any, Optional
 
 from pandas import DataFrame
 from pymongo.mongo_client import MongoClient
@@ -19,6 +19,7 @@ class SearchEngine:
 
     def __init__(
             self,
+            openai_key: Optional[str] = None,
             embedding_model_name: str = GTE_BASE,
             gpt_version: str = GPT3_5,
             num_candidates: int = DEFAULT_NUM_CANDIDATES,
@@ -39,7 +40,7 @@ class SearchEngine:
         self.num_candidates = num_candidates
         self.max_results = max_results
         self.embedding_model = EmbeddingModel(embedding_model_name)
-        self.gpt_client = GPTClient(gpt_version)
+        self.gpt_client = GPTClient(openai_key, gpt_version)
 
     def fill_embedding_database(self, dataframe: DataFrame) -> None:
         self.collection.delete_many({})

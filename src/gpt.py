@@ -1,13 +1,13 @@
-from os import environ
+from typing import Optional
 
 from openai import OpenAI
 
 
 class GPTClient:
 
-    def __init__(self, version: str) -> None:
+    def __init__(self, api_key: Optional[str], version: str) -> None:
         self.version = version
-        self.client = OpenAI(api_key=environ.get("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=api_key)
 
     def prompt(self, query: str, text: str) -> str:
         response = self.client.chat.completions.create(
