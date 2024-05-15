@@ -5,6 +5,7 @@ from retrying import retry
 
 
 class GPTClient:
+    GPT3_5 = "gpt-3.5-turbo"
 
     def __init__(self, api_key: Optional[str], version: str) -> None:
         self.version = version

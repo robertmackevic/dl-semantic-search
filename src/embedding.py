@@ -1,20 +1,32 @@
 import re
 import string
 import warnings
+from enum import Enum
 from typing import List
 
 from sentence_transformers import SentenceTransformer
 from torch import cuda
 
+from src.paths import MODEL_DIR
+
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-class EmbeddingModel:
-    def __init__(self, model_name: str) -> None:
-        self.device = "cuda" if cuda.is_available() else "cpu"
-        self.model = SentenceTransformer(model_name, device=self.device)
+class GTE(Enum):
+    SMALL = "thenlper/gte-small"
+    BASE = "thenlper/gte-base"
+    LARGE = "thenlper/gte-large"
 
-    def get_embedding(self, text: str) -> List[float] | ValueError:
+
+class EmbeddingModel:
+    def __init__(self, model_version: GTE) -> None:
+        self.model = SentenceTransformer(
+            model_name_or_path=model_version.value,
+            device="cuda" if cuda.is_available() else "cpu",
+            cache_folder=MODEL_DIR,
+        )
+
+    def get_embedding(self, text: str) -> List[float]:
         text = self._preprocess_text(text)
 
         if len(text) == 0:

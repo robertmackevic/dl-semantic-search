@@ -3,12 +3,13 @@ from os import environ
 from typing import Optional
 
 from src.engine import SearchEngine
+from src.gpt import GPTClient
 
 
 def parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument("--openai-key", type=str, required=False, default=None)
-    parser.add_argument("--gpt-version", type=str, required=False, default=SearchEngine.GPT3_5)
+    parser.add_argument("--gpt-version", type=str, required=False, default=GPTClient.GPT3_5)
     parser.add_argument("--num-candidates", type=int, required=False, default=SearchEngine.DEFAULT_NUM_CANDIDATES)
     parser.add_argument("--num-results", type=int, required=False, default=SearchEngine.DEFAULT_NUM_RESULTS)
     return parser.parse_args()
@@ -17,6 +18,7 @@ def parse_args() -> Namespace:
 def run(openai_key: Optional[str], gpt_version: str, num_candidates: int, num_results: int) -> None:
     if openai_key is None:
         openai_key = environ.get("OPENAI_API_KEY")
+
         if openai_key is None:
             print(
                 "[WARNING] OpenAI API key was not provided in the CMD line arguments "
