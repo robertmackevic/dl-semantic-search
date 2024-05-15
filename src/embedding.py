@@ -20,9 +20,10 @@ class GTE(Enum):
 
 class EmbeddingModel:
     def __init__(self, model_version: GTE) -> None:
+        self.device = "cuda" if cuda.is_available() else "cpu"
         self.model = SentenceTransformer(
             model_name_or_path=model_version.value,
-            device="cuda" if cuda.is_available() else "cpu",
+            device=self.device,
             cache_folder=MODEL_DIR,
         )
 

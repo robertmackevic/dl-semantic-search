@@ -15,9 +15,8 @@ class SearchEngine:
 
     def __init__(
             self,
-            openai_key: Optional[str] = None,
             embedding_model_version: GTE = GTE.SMALL,
-            gpt_version: str = GPTClient.GPT3_5,
+            gpt_client: Optional[GPTClient] = None,
             num_candidates: int = DEFAULT_NUM_CANDIDATES,
             max_results: int = DEFAULT_NUM_RESULTS,
     ) -> None:
@@ -32,10 +31,10 @@ class SearchEngine:
 
         self.collection = self.client["embeddings"]["articles"]
 
+        self.embedding_model = EmbeddingModel(embedding_model_version)
+        self.gpt_client = gpt_client
         self.num_candidates = num_candidates
         self.max_results = max_results
-        self.embedding_model = EmbeddingModel(embedding_model_version)
-        self.gpt_client = GPTClient(openai_key, gpt_version)
 
     def fill_embedding_database(self, dataframe: DataFrame) -> None:
         self.collection.delete_many({})
@@ -73,10 +72,12 @@ class SearchEngine:
 
         for result in results:
             response += (
-                f"Title: {result.get("title", "N/A")}\n"
-                f"Authors: {result.get("authors", "N/A")}\n"
-                f"Abstract: {result.get("abstract", "N/A")}\n"
-                f"Journal reference: {result.get("journal-ref", "N/A")}\n\n"
+                f"Title: {result.get('title', 'N/A')}\n"
+                f"Authors: {result.get('authors', 'N/A')}\n"
+                f"Abstract: {result.get('abstract', 'N/A')}\n"
+                f"Journal reference: {result.get('journal-ref', 'N/A')}\n\n"
             )
 
-        return self.gpt_client.prompt(query, response) if use_gpt else response
+        return self.gpt_client.prompt(query, response) \
+            if self.gpt_client is not None and use_gpt \
+            else response

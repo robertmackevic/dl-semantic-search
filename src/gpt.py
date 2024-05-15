@@ -1,5 +1,3 @@
-from typing import Optional
-
 from openai import OpenAI
 from retrying import retry
 
@@ -7,14 +5,14 @@ from retrying import retry
 class GPTClient:
     GPT3_5 = "gpt-3.5-turbo"
 
-    def __init__(self, api_key: Optional[str], version: str) -> None:
-        self.version = version
-        self.client = OpenAI(api_key=api_key)
+    def __init__(self, model_version: str = GPT3_5) -> None:
+        self.model_version = model_version
+        self.client = OpenAI()
 
     @retry(stop_max_attempt_number=5, wait_fixed=1000)
     def prompt(self, query: str, text: str) -> str:
         response = self.client.chat.completions.create(
-            model=self.version,
+            model=self.model_version,
             messages=[
                 {
                     "role": "system",
