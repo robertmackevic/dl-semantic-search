@@ -1,6 +1,7 @@
 from typing import Optional
 
 from openai import OpenAI
+from retrying import retry
 
 
 class GPTClient:
@@ -9,6 +10,7 @@ class GPTClient:
         self.version = version
         self.client = OpenAI(api_key=api_key)
 
+    @retry(stop_max_attempt_number=5, wait_fixed=1000)
     def prompt(self, query: str, text: str) -> str:
         response = self.client.chat.completions.create(
             model=self.version,
