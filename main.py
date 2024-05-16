@@ -3,6 +3,9 @@ Entry point of the semantic search tool application.
 This is only an example program made for learning purposes.
 The database used by the tool will be deleted in the future.
 
+To use the RAG-to-GPT pipeline mode, enter a single TAB character as a query.
+The displayed text should switch from `>>>` to `[gpt] >>>`
+
 Requirements:
 * MONGO_CONNECTION_STRING
 * [Optional] OPENAI_API_KEY
