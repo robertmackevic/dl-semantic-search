@@ -1,3 +1,10 @@
+"""
+Script for automated Docker image building (and pushing).
+
+Requirements:
+* MONGO_CONNECTION_STRING
+* [Optional] Push permission to `robertmackevic` Docker Hub repository.
+"""
 import subprocess
 from argparse import ArgumentParser, Namespace
 from os import environ

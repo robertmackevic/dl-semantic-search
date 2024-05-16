@@ -1,3 +1,12 @@
+"""
+Entry point of the semantic search tool application.
+This is only an example program made for learning purposes.
+The database used by the tool will be deleted in the future.
+
+Requirements:
+* MONGO_CONNECTION_STRING
+* [Optional] OPENAI_API_KEY
+"""
 from argparse import Namespace, ArgumentParser
 from os import environ
 

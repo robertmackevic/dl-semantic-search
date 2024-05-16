@@ -12,6 +12,7 @@ ENV MONGO_CONNECTION_STRING=$MONGO_CONNECTION_STRING
 
 RUN apt-get update && \
     pip install -r requirements.txt && \
+    # Cleanup
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 CMD ["python", "main.py"]
