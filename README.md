@@ -22,7 +22,7 @@ This feature is optional and only available if you have a valid `OPENAI_API_KEY`
 
 This application is made available to run through Docker services.
 
-Docker repository: https://hub.docker.com/repository/docker/robertmackevic/semantic-search/general
+Docker repository: https://hub.docker.com/r/robertmackevic/semantic-search
 
 The application utilized a Pytorch CUDA base image, meaning it supports GPU inference.
 However, the GTE-small model used is very lightweight,

@@ -55,7 +55,7 @@ def run(gpt_version: str, num_candidates: int, num_results: int) -> None:
                 if use_gpt and openai_key is None:
                     print(
                         "Unable to use GPT summarization because OPENAI_API_KEY is not an environment variable. "
-                        "Type and enter the TAB key to disable RAG to GPT pipeline."
+                        "Type and enter the TAB key to disable RAG-to-GPT pipeline."
                     )
                     continue
 
